@@ -47,6 +47,10 @@ if [ "$CURRENT_URL" != "http://localhost:$HOST_PORT" ]; then
 	docker-compose run --rm -u 33 $CLI option update siteurl "http://localhost:$HOST_PORT" --quiet
 fi
 
+# Update permalinks
+echo -e "Updating permalinks..."
+docker-compose run --rm -u 33 $CLI rewrite structure '/%year%/%monthnum%/%postname%' --quiet
+
 # Install a dummy favicon to avoid 404 errors.
 echo -e "Installing a dummy favicon..."
 docker-compose run --rm $CONTAINER touch /var/www/html/favicon.ico
